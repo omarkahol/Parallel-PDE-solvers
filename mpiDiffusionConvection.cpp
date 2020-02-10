@@ -7,11 +7,11 @@
 #include <chrono>
 
 // VARIABILI DEL PROBLEMA
-const int N_POINTS_PROCESS =20; //NUMERO DI PUNTI DA ASSEGNARE AD OGNI PROCESSO
+const int N_POINTS_PROCESS =5; //NUMERO DI PUNTI DA ASSEGNARE AD OGNI PROCESSO
 const double LENGTH = 1;  //LUNGHEZZA DELL'INTERVALLO
 const int ITERATIONS_TIME=1000; //ITERAZIONI TEMPORALI
 const double C = 5;   
-const double K = 0.001;
+const double K = 0.02;
 
 //FUNZIONE PER SALVARE I DATI SU UN FILE DI TESTO CSV
 void writeData (int npoints, const std::vector<double>* storage, std::string&& name){

@@ -54,7 +54,7 @@ int main() {
     auto uOld = initialCondition(grid);
 
     auto uNew = initialCondition(grid);
-    short int it = 0;
+    int it = 0;
 
     //ALLOCATE SOME MEMORY
     auto* storage = new std::vector<double>[ITERATIONS_TIME];
