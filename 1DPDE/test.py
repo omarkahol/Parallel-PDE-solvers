@@ -34,30 +34,37 @@ def energy(NT, dataMatrix, xArray):
 #OPENMP APPROACH
 commandStr = 'g++ openmpDiffusionConvection.cpp functions.cpp -fopenmp -o out'
 os.system(commandStr)
-nThreads = range(2,11)
-npointsbase = 1000
+nThreadsOMP = [1,2,4,8]
+npointsbase = 100000
 elapsedTimeArrOMP = []
-for n in nThreads:
+for n in nThreadsOMP:
   npointsthread = int(npointsbase/n)
-  commandStr='./out {0} {1} 0.001 0'.format(n,npointsthread)
+  commandStr='./out {0} {1} 0.0001 0'.format(n,npointsthread)
   os.system(commandStr)
   nx, ntt, dx, dt, t = readResults()
   elapsedTimeArrOMP.append(t)
 
+
 #MPI APPROACH
-commandStr = 'mpic++ mpiDiffusionConvection2.cpp functions.cpp functionsMPI.cpp -o out'
+commandStr = 'mpic++ mpiDiffusionConvection2.cpp functions.cpp functionsMPI.cpp -O2 -o out'
 os.system(commandStr)
-nThreads = range(2,11)
-npointsbase = 1000
+nThreadsMPI = [2,4,8]
+npointsbase = 100000
 elapsedTimeArrMPI = []
-for n in nThreads:
+for n in nThreadsMPI:
   npointsthread = int(npointsbase/n)
-  commandStr='mpirun -np {0} --oversubscribe ./out {1} 0.001 0'.format(n, npointsthread);
+  commandStr='mpirun -np {0} --oversubscribe ./out {1} 0.0001 0'.format(n, npointsthread);
   os.system(commandStr)
   nx, ntt, dx, dt, t = readResults()
   elapsedTimeArrMPI.append(t)
-plt.plot(nThreads,elapsedTimeArrOMP,'k-')
-plt.plot(nThreads,elapsedTimeArrMPI,'r-')
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(nThreadsMPI,elapsedTimeArrMPI,'ro-', label='MPI')
+ax.plot(nThreadsOMP,elapsedTimeArrOMP,'bo-', label='OPENMP')
+ax.legend()
+ax.set_xlabel('Numero di processori')
+ax.set_ylabel('Tempo impegato [miscrosecondi]')
+ax.set_title('Tempo impiegato in funzione del numero di processori')
 plt.show()
 
 

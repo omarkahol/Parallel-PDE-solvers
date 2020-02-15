@@ -5,13 +5,21 @@
 #include <cmath>
 #include <iostream>
 
-const double C = 10;
-const double K = 0.01;
+const double c = 10;
+const double k = 0.1;
 
-void writeData(double **data, const int &nTIME, const int &nPOINTS, const char *fileName);
-double **allocateMemory(const int &nTIME, const int &nPOINTS);
-void freeMemory(double **pMemory, const int &nTIME);
-void initGrid(double **pMemory, const int &nPOINTS, const double& DX, const double &LENGTH);
-void evolvePDE(double **pMemory, const int &currentIT, const int &nPOINTS, const int &start, const int &end, const double &DX, const double &DT);
-void printResults(const char *fileName, const int &NPOINTS, const int &NTHREADS,const double &DT, const double &DX,const double &ELAPSED_TIME);
+struct Processor1D{
+int start;
+int nPointsProc;
+int nPointsTot;
+double dx;
+double dt;
+};
+
+void writeData(double **pMemory, const int &nTime, const int &nPoints, const char *fileName);
+double **allocateMemory(const int &nTime, const int &nPoints);
+void freeMemory(double **pMemory, const int &nTime);
+void initGrid(double **pMemory, const int &nPoints, const double& dx, const double &length);
+void evolvePDE(double **pMemory, const int &t, Processor1D *pProc);
+void printResults(const char *fileName, const int &nPoints, const int &nThreads,const double &dt, const double &dx,const double &elapsedTime);
 #endif

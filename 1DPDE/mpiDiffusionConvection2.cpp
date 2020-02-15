@@ -1,54 +1,54 @@
 #include "functionsMPI.h"
 #include <chrono>
 
-const int ITERATIONS_TIME=500;
-int NPOINTS_PROCESS;
-const double LENGTH=1;
-int NPOINTS_TOTAL;
-double DX;
-double DT;
-double SIGMA;
-bool SHOW_RESULTS;
-
 int main(int argc, char *argv[]) {
   //INIZIALIZZO MPI
-  int ierr, ID, numProcs;
+  int ierr, id, nProcs;
   ierr = MPI_Init(0, 0); // INIZIALIZZA LE VARIABILI DI MPI
-  ierr = MPI_Comm_rank(MPI_COMM_WORLD,&ID); //DETERMINA L'ID DEL PROCESSO
-  ierr = MPI_Comm_size(MPI_COMM_WORLD, &numProcs); // DETERMINA IL NUMERO DI PROCESSI
+  ierr = MPI_Comm_rank(MPI_COMM_WORLD,&id); //DETERMINA L'id DEL PROCESSO
+  ierr = MPI_Comm_size(MPI_COMM_WORLD, &nProcs); // DETERMINA IL NUMERO DI PROCESSI
   MPI_Status status; // STATO DEL PROCESSO
 
   //VARIABILI
-  NPOINTS_PROCESS = std::atoi(argv[1]);
-  SIGMA = std::atof(argv[2]);
-  SHOW_RESULTS = bool(std::atoi(argv[3]));
-  NPOINTS_TOTAL = numProcs*NPOINTS_PROCESS - 2*numProcs;
-  DX = LENGTH/(NPOINTS_TOTAL-1);
-  DT = SIGMA*DX;
+  const int nPointsProc = std::atoi(argv[1]);
+  const double sigma = std::atof(argv[2]);
+  const bool showResults = bool(std::atoi(argv[3]));
+  const int nTime=5;
+  const int nPointsTotal = nProcs*nPointsProc - 2*nProcs;
+  const double length=1;
+  const double dx = length/(nPointsTotal-1);
+  const double dt = sigma*dx;
   
-  double **PROCESSGRID = allocateMemory(ITERATIONS_TIME,NPOINTS_PROCESS);
-  initProcessGrid(PROCESSGRID,ID,numProcs,NPOINTS_PROCESS,DX,LENGTH);
+  double **pGrid = allocateMemory(nTime,nPointsProc);
+  initProcessGrid(pGrid,id,nProcs,nPointsProc,dx,length);
+
+  Processor1D processor{0,nPointsProc,nPointsTotal,dx,dt};
 
   auto start = std::chrono::high_resolution_clock::now();
-  for(int t=0; t<ITERATIONS_TIME-1; t++) {
-    evolvePDE(PROCESSGRID, t, NPOINTS_PROCESS, -1, NPOINTS_PROCESS+2, DX,DT);
-    mpiCommunicateResults(PROCESSGRID, t+1, NPOINTS_PROCESS, ID, numProcs, &status);
+  for(int t=0; t<nTime-1; t++) {
+    evolvePDE(pGrid, t, &processor);
+    mpiCommunicateResults(pGrid, t+1, nPointsProc, id, nProcs, &status);
   }
   auto stop = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-  if (ID==1){
-  writeData(PROCESSGRID,ITERATIONS_TIME,NPOINTS_PROCESS,"dataFile.csv");
-  printResults("resultsFile.csv",NPOINTS_TOTAL,numProcs,DT,DX,duration.count());
-  freeMemory(PROCESSGRID, ITERATIONS_TIME);
-
-  if (SHOW_RESULTS) {
-    std::system("python3 postProcessorDiffusionConvection.py");
-  }
-
+  if (id==0) {
+    double **dumpMemory = finalizeResults(pGrid,&processor,nTime, nProcs,&status);
+    writeData(dumpMemory,nTime,nPointsTotal,"dataFile.csv");
+    printResults("resultsFile.csv",nPointsTotal,nProcs,dt,dx,duration.count());
+    freeMemory(dumpMemory, nTime);
+    if (showResults){
+      std::system("python3 postProcessorDiffusionConvection.py");
+    }
   } else {
-    freeMemory(PROCESSGRID, ITERATIONS_TIME);
+    for (int t=0; t<nTime; t++) {
+      for(int i=0; i<nPointsProc-2; i++){
+        MPI_Send(&(pGrid[t][i]),1,MPI_DOUBLE,0,0,MPI_COMM_WORLD);
+      }
+    }
+    freeMemory(pGrid, nTime);
   }
+
   ierr = MPI_Finalize();
   return 0;
 }

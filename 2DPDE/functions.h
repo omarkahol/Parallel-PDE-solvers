@@ -9,8 +9,8 @@
 #include <vector>
 
 const double length = 1;
-const double cX = 1.0;
-const double cY = 3.0;
+const double cX = 5.0;
+const double cY = 2.0;
 const double k = 0.1;
 
 struct Processor{
@@ -22,6 +22,7 @@ double dx;
 double dy;
 int nPointsTotX;
 int nPointsTotY;
+bool state{true};
 };
 
 double ***allocateMemory(const int& nTime, const int &nX, const int &nY);

@@ -9,28 +9,31 @@ ESEGUI --> ./out [numero di punti] [sigma] [mostra i risultati]
 
 int main(int argc, char *argv[]) {
 
-    int NPOINTS = std::atoi(argv[1]);
-    double LENGTH = 1;
-    double DX = LENGTH/(NPOINTS-1);
-    double SIGMA = std::atof(argv[2]);
-    double DT = SIGMA*DX;
-    int ITERATIONS_TIME=1000;
-    bool SHOW_RESULTS = (bool) std::atoi(argv[3]);
+    const int nPoints = std::atoi(argv[1]);
+    const double sigma = std::atof(argv[2]);
+    const bool showResults = (bool) std::atoi(argv[3]);
+    
+    const double length = 1;
+    const double dx = length/(nPoints-1);
+    const double dt = sigma*dx;
+    const int nTime=1000;  
 
-    double **pDATA_STORAGE = allocateMemory(ITERATIONS_TIME,NPOINTS);
-    initGrid(pDATA_STORAGE,NPOINTS, DX, LENGTH);
+    double **pGrid = allocateMemory(nTime,nPoints);
+    initGrid(pGrid,nPoints, dx, length);
+
+    Processor1D processor{0,nPoints+2,nPoints, dx, dt};
 
     auto start = std::chrono::high_resolution_clock::now();
-    for(int t=0; t<ITERATIONS_TIME-1; t++) {
-        evolvePDE(pDATA_STORAGE, t, NPOINTS, -1, NPOINTS+2, DX, DT);
+    for(int t=0; t<nTime-1; t++) {
+        evolvePDE(pGrid, t, &processor);
     }
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-    writeData(pDATA_STORAGE,ITERATIONS_TIME,NPOINTS,"dataFile.csv");
-    printResults("resultsFile.csv",NPOINTS,1,DT,DX,duration.count());
-    freeMemory(pDATA_STORAGE, ITERATIONS_TIME);
-    if (SHOW_RESULTS){
+    writeData(pGrid,nTime,nPoints,"dataFile.csv");
+    printResults("resultsFile.csv",nPoints,1,dt,dx,duration.count());
+    freeMemory(pGrid, nTime);
+    if (showResults){
     std::system("python3 postProcessorDiffusionConvection.py");
     }
     return 0;

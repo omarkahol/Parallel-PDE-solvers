@@ -1,5 +1,5 @@
-Numero di punti,40
-Numero di threads, 5
-DT, 0.00025641
-DX, 0.025641
-Tempo richiesto microsecondi, 11400
+Numero di punti,99984
+Numero di threads, 8
+dt, 1.00017e-09
+dx, 1.00017e-05
+Tempo richiesto microsecondi, 7281

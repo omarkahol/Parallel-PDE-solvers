@@ -25,7 +25,7 @@ void initGrid(double ***pMemory, const int &nX, const int &nY) {
   double dy = length/(nY-1);
   for (int i=0; i<nY; i++) {
     for (int j=0; j<nX; j++) {
-      if (std::sqrt(std::pow(i*dy-0.5,2)+std::pow(j*dx-0.5,2))<0.1) {
+      if (std::sqrt(std::pow(i*dy-0.5,2)+std::pow(j*dx-0.5,2))<0.2) {
       pMemory[0][i][j] = 1;
       } else {
         pMemory[0][i][j] = 0;

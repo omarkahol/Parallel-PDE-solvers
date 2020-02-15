@@ -26,15 +26,15 @@ int main(int arc, char *argv[]) {
   auto start = std::chrono::high_resolution_clock::now();
   #pragma omp parallel
   {
-    int ID = omp_get_thread_num();
+    int id = omp_get_thread_num();
     for(int t=0; t<nTime-1; t++) {
-      evolvePDE(uGrid, vGrid, t, dt, &(processorPool[ID]));
+      evolvePDE(uGrid, vGrid, t, dt, &(processorPool[id]));
       #pragma omp barrier
     }
   }
   auto stop = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  std::cout << "Integrazione terminata dopo " << duration.count() << " microsecondi." << std::endl;
+  std::cout << "Microsecondi per puntos --> " <<double(duration.count())/(nXtot*nYtot) << std::endl;
 
   writeFile(uGrid, vGrid, nXtot, nYtot, nTime, "resultsFile.csv");
 

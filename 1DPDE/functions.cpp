@@ -1,57 +1,59 @@
 #include "functions.h"
 
-void writeData(double **data, const int &nTIME, const int &nPOINTS, const char *fileName) {
+void writeData(double **pMemory, const int &nTime, const int &nPoints, const char *fileName) {
   std::fstream f;
   f.open(fileName,std::ios::out);
 
-  for (int i=0; i<nTIME; i++) {
-    for (int j=0; j<nPOINTS; j++) {
-      if (j != nPOINTS-1)
-        f << data[i][j] << ",";
+  for (int i=0; i<nTime; i++) {
+    for (int j=0; j<nPoints; j++) {
+      if (j != nPoints-1)
+        f << pMemory[i][j] << ",";
       else
-        f << data[i][j]<<std::endl;
+        f << pMemory[i][j]<<std::endl;
       }
     }
     f.close();
 }
 
-double **allocateMemory(const int &nTIME, const int &nPOINTS){
-  double **pMemory = new double*[nTIME];
-  for (int i=0; i<nTIME; i++){
-    pMemory[i] = new double[nPOINTS];
+double **allocateMemory(const int &nTime, const int &nPoints){
+  double **pMemory = new double*[nTime];
+  for (int i=0; i<nTime; i++){
+    pMemory[i] = new double[nPoints];
   }
   return pMemory;
 }
 
-void freeMemory(double **pMemory, const int &nTIME){
-  for (int t=0; t<nTIME; t++){
+void freeMemory(double **pMemory, const int &nTime){
+  for (int t=0; t<nTime; t++){
     delete[] pMemory[t];
   }
   delete[] pMemory;
 }
 
-void initGrid(double **pMemory, const int &nPOINTS, const double& DX, const double &LENGTH){
-  for (int i=0; i<nPOINTS; i++) {
-    pMemory[0][i] = std::sin(2*M_PI*i*DX/LENGTH);
+void initGrid(double **pMemory, const int &nPoints, const double& dx, const double &length){
+  for (int i=0; i<nPoints; i++) {
+    pMemory[0][i] = std::sin(2*M_PI*i*dx/length);
   }
 }
 
-void evolvePDE(double **pMemory, const int &t, const int &nPOINTS, const int &start, const int &end, const double &DX, const double &DT) {
-  for (int i=start+1; i<end-1; i++) {
-        pMemory[t+1][(i)%nPOINTS] = pMemory[t][(i)%nPOINTS]
-          + DT*(  -C*((pMemory[t][(i)%nPOINTS]-pMemory[t][(i-1)%nPOINTS])/DX)
-            + K*(pMemory[t][(i+1)%nPOINTS]-2*pMemory[t][i%nPOINTS]
-              + pMemory[t][(i-1)%nPOINTS])/std::pow(DX,2)  );
+void evolvePDE(double **pMemory, const int &t, Processor1D *pProc) {
+  int nPoints = pProc -> nPointsTot;
+  int end =pProc->start + pProc->nPointsProc;
+  for (int i=pProc->start +1 ; i<end; i++) {
+        pMemory[t+1][(i)%nPoints] = pMemory[t][(i)%nPoints]
+          + pProc->dt*(  -c*((pMemory[t][(i+1)%nPoints]-pMemory[t][std::abs(i-1)%nPoints])/(2*pProc->dx))
+            + k*(pMemory[t][(i+1)%nPoints]-2*pMemory[t][i%nPoints]
+              + pMemory[t][std::abs(i-1)%nPoints])/std::pow(pProc->dx,2)  );
       }
 }
 
-void printResults(const char *fileName, const int &NPOINTS, const int &NTHREADS,const double &DT, const double &DX,const double &ELAPSED_TIME){
+void printResults(const char *fileName, const int &nPoints, const int &nThreads,const double &dt, const double &dx,const double &elapsedTime){
   std::fstream f;
   f.open(fileName, std::ios::out);
-  f << "Numero di punti," << NPOINTS << std::endl;
-  f << "Numero di threads, " << NTHREADS << std::endl;
-  f << "DT, " << DT << std::endl;
-  f << "DX, " << DX << std::endl;
-  f << "Tempo richiesto microsecondi, " << ELAPSED_TIME << std::endl;
+  f << "Numero di punti," << nPoints << std::endl;
+  f << "Numero di threads, " << nThreads << std::endl;
+  f << "dt, " << dt << std::endl;
+  f << "dx, " << dx << std::endl;
+  f << "Tempo richiesto microsecondi, " << elapsedTime << std::endl;
   f.close();
 }
