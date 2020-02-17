@@ -4,7 +4,7 @@
 
 /*
 COMPILA --> g++ serialDiffusionConvection.cpp functions.cpp -o out
-ESEGUI --> ./out [numero di punti] [sigma] [mostra i risultati]
+ESEGUI --> ./out [numero di punti] [sigma] [mostra i risultati] [iterazioni nel tempo]
 */
 
 int main(int argc, char *argv[]) {
@@ -12,13 +12,13 @@ int main(int argc, char *argv[]) {
     const int nPoints = std::atoi(argv[1]);
     const double sigma = std::atof(argv[2]);
     const bool showResults = (bool) std::atoi(argv[3]);
-    
+    const int nTime=std::atoi(argv[5]);
+
     const double length = 1;
     const double dx = length/(nPoints-1);
     const double dt = sigma*dx;
-    const int nTime=1000;  
 
-    double **pGrid = allocateMemory(nTime,nPoints);
+    double ***pGrid = allocateMemory(nTime,nPoints);
     initGrid(pGrid,nPoints, dx, length);
 
     Processor1D processor{0,nPoints+2,nPoints, dx, dt};
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
     writeData(pGrid,nTime,nPoints,"dataFile.csv");
     printResults("resultsFile.csv",nPoints,1,dt,dx,duration.count());
-    freeMemory(pGrid, nTime);
+    freeMemory(pGrid, nTime, nPoints);
     if (showResults){
     std::system("python3 postProcessorDiffusionConvection.py");
     }
