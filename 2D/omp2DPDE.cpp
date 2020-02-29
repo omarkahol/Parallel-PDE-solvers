@@ -4,8 +4,8 @@
 #include <omp.h>
 #include <vector>
 
-#define NX 501
-#define NY 501
+#define NX 11
+#define NY 11
 #define NT 500
 #define DX 1.0/double(NX-1)
 #define DY 1.0/double(NY-1)
@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
     y = i*DY;
     for (j = 0; j < NX; j++) {
       x=j*DX;
-      if (std::sqrt(std::pow(x-0.5,2) + std::pow(y-0.5,2))<0.5){
+      if (std::sqrt(std::pow(x-0.5,2) + std::pow(y-0.5,2))<0.2){
         solution[j + NX * (i + NY * 0)] = 5.0;
       } else {
         solution[j + NX * (i + NY * 0)] = 1.0;
