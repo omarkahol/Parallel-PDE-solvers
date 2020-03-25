@@ -32,6 +32,7 @@ int main(int argc, char **argv) {
       } else {
         solution[j + NX * (i + NY * 0)] = 1.0;
       }
+      solution[j + NX * (i + NY * 0)] = std::sin(2*M_PI*x)*std::cos(2*M_PI*y);
     }
   }
 

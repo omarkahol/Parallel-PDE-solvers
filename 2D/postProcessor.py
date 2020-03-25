@@ -28,18 +28,16 @@ X, Y = np.meshgrid(xAxis, yAxis)
 
 fig = plt.figure()
 ax = fig.add_subplot(111,xlim=(0,1),ylim=(0,1), projection='3d')
-ax.set_title('Ut(x,y,t) +U*grad(U)(x,y,t) = k*lap(U)(x,y,t)')
-ax.set_xlabel('x');
-ax.set_ylabel('y');
+
 
 def animate(i):
   ax.clear()
   cc = ax.plot_surface(X,Y,dataMatrix[i,:,:],alpha=1, cmap=cm.viridis)
-  ax.set_title('Ut(x,y,t) +U*grad(U)(x,y,t) = k*lap(U)(x,y,t)')
+  ax.set_title('Ut + C1*Ux + C2*Uy = K*(Uxx + Uyy)')
   ax.set_xlabel('x');
   ax.set_ylabel('y');
-  ax.set_zlabel('z')
-  ax.set_zlim((0,5))
+  ax.set_zlabel('U(x,y)')
+  ax.set_zlim((-1,1))
   return cc
 
 ani = FuncAnimation(fig,animate, frames=nT, interval=1, blit=False)
