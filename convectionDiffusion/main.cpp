@@ -1,8 +1,8 @@
-#include "pdeSolver.h"
+#include <iostream>
+#include "solver.h"
 
 int main(int argc, char **argv) {
-
-    dealii::Utilities::MPI::MPI_InitFinalize init(argc, argv, 1);
-    pdeSolver<2> solver;
-    solver.run();
+    dealii::Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+    solver<2> solv;
+    solv.run();
 }

@@ -64,18 +64,18 @@ int main(int argc, char **argv) {
       analyticSolution = std::sin(2*M_PI*(phase + i*DX-C*t*DT))*std::exp(-t*K*DT*std::pow((2*M_PI),2));
       error[t] += std::pow(solution[t*nPoints+i]-analyticSolution,2);
     }
-    error[t] = std::sqrt(error[t]);
     MPI_Waitall(4,request,status);
   }
   double end = MPI_Wtime();
 
   //PRINT RESULTS
   double elapsedTime=end-start;
-  double meanTime=0.0;
+  double meanTime{0.0};
   MPI_Reduce(&elapsedTime,&meanTime,1,MPI_DOUBLE, MPI_SUM, 0,MPI_COMM_WORLD);
 
-  double meanError[NT];
-  MPI_Reduce(error,meanError,NT,MPI_DOUBLE, MPI_SUM, 0,MPI_COMM_WORLD);
+  double maxError[NT];
+  MPI_Reduce(error,maxError,NT,MPI_DOUBLE, MPI_SUM, 0,MPI_COMM_WORLD);
+
   
   if (id==0) {
     std::cout << "numPoints," <<nPointsTot<<std::endl;
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
     std::cout << "numTime," << NT<<std::endl;
     std::cout << std::setprecision(5) <<"dt,"<<DT<<std::endl;
     std::cout << std::setprecision(5)<<"elapsedTime," << meanTime/numProcs << std::endl;
-    std::cout << "maxError," << (*std::max_element(meanError, meanError+NT))/numProcs << std::endl;
+    std::cout << "maxError," << std::sqrt(*std::max_element(maxError, maxError+NT)) << std::endl;
     std::cout << std::endl;
   }
   if (show){

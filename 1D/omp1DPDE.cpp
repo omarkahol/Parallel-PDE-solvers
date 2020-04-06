@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   bool show = (bool) std::atoi(argv[2]); //CALL POSTPROCESSOR
 
   //INTIALING MEMORY --> USING A FLAT DOUBLE*
-  double *solution = new double[2*NX*NT];
+  double *solution = new double[NX*NT];
 
   for (int i=0; i<NX; i++){
     solution[i] = std::sin(i*DX*2*M_PI); //INITIAL CONDITION
@@ -42,12 +42,12 @@ int main(int argc, char **argv) {
       for(i=0; i<NX; i++){
         iBefore = (i==0)?NX-2:i-1;
         iAfter = (i==NX-1)?1:i+1;
-        dUdx = (solution[2*t*NX+iAfter]-solution[2*t*NX+iBefore])/(2*DX);
-        d2Udx2 = (solution[2*t*NX+iAfter]-2*solution[2*t*NX+i]+solution[2*t*NX+iBefore])/(DX*DX);
-        solution[2*(t+1)*NX+i] = solution[2*t*NX+i] + DT*(-C*dUdx+K*d2Udx2);
-        energy[t] += DX*solution[2*t*NX+i]*solution[2*t*NX+i];
-        analyticSolution = std::sin(2*M_PI*(i*DX-C*t*DT))*std::exp(-t*DT*K*std::pow((2*M_PI),2));
-        error[t] += std::pow(solution[2*t*NX+i]-analyticSolution,2);
+        dUdx = (solution[t*NX+iAfter]-solution[t*NX+iBefore])/(2*DX);
+        d2Udx2 = (solution[t*NX+iAfter]-2*solution[t*NX+i]+solution[t*NX+iBefore])/(DX*DX);
+        solution[(t+1)*NX+i] = solution[t*NX+i] + DT*(-C*dUdx+K*d2Udx2);
+        energy[t] += DX*solution[t*NX+i]*solution[t*NX+i];
+        analyticSolution = std::sin(2*M_PI*(i*DX-C*t*DT))*std::exp(-t*DT*K*std::pow(2*M_PI,2));
+        error[t] += std::pow(solution[t*NX+i]-analyticSolution,2);
       }
     }
   }

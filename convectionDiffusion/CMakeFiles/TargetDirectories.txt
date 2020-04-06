@@ -1,0 +1,3 @@
+/home/omarkahol/PDES/scalableConvectionDiffusion/CMakeFiles/rebuild_cache.dir
+/home/omarkahol/PDES/scalableConvectionDiffusion/CMakeFiles/edit_cache.dir
+/home/omarkahol/PDES/scalableConvectionDiffusion/CMakeFiles/scalableConvectionDiffusion.dir

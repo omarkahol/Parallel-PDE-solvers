@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="scalableConvectionDiffusion"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\.deal2\;CMake Files\..\..\.deal2\lib\;CMake Files\..\..\.deal2\lib\cmake\;CMake Files\..\..\.deal2\lib\cmake\deal.II\;CMake Files\..\..\.deal2\share\;CMake Files\..\..\.deal2\share\deal.II\;CMake Files\..\..\.deal2\share\deal.II\macros\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/omarkahol/PDES/scalableConvectionDiffusion"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/omarkahol/PDES/scalableConvectionDiffusion"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/omarkahol/PDES/scalableConvectionDiffusion"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="scalableConvectionDiffusion">
+				<Option output="/home/omarkahol/PDES/scalableConvectionDiffusion/scalableConvectionDiffusion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omarkahol/PDES/scalableConvectionDiffusion"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_NO_AUTO_PTR"/>
+					<Add directory="/home/omarkahol/.deal2/include"/>
+					<Add directory="/home/omarkahol/.deal2/include/deal.II/bundled"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/suitesparse"/>
+					<Add directory="/home/omarkahol/.petsc/include"/>
+					<Add directory="/home/omarkahol/.petsc/arch-linux2-c-opt/include"/>
+					<Add directory="/home/omarkahol/.openmpi/include"/>
+					<Add directory="/home/omarkahol/.p4est/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 scalableConvectionDiffusion"/>
+					<CompileFile command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="scalableConvectionDiffusion/fast">
+				<Option output="/home/omarkahol/PDES/scalableConvectionDiffusion/scalableConvectionDiffusion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omarkahol/PDES/scalableConvectionDiffusion"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_NO_AUTO_PTR"/>
+					<Add directory="/home/omarkahol/.deal2/include"/>
+					<Add directory="/home/omarkahol/.deal2/include/deal.II/bundled"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/suitesparse"/>
+					<Add directory="/home/omarkahol/.petsc/include"/>
+					<Add directory="/home/omarkahol/.petsc/arch-linux2-c-opt/include"/>
+					<Add directory="/home/omarkahol/.openmpi/include"/>
+					<Add directory="/home/omarkahol/.p4est/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 scalableConvectionDiffusion/fast"/>
+					<CompileFile command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/home/omarkahol/PDES/scalableConvectionDiffusion/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/main.cpp">
+			<Option target="scalableConvectionDiffusion"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/lib/cmake/deal.II/deal.IIConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\lib\cmake\deal.II\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/lib/cmake/deal.II/deal.IIConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\lib\cmake\deal.II\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/lib/cmake/deal.II/deal.IITargets-debugrelease.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\lib\cmake\deal.II\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/lib/cmake/deal.II/deal.IITargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\lib\cmake\deal.II\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/share/deal.II/macros/macro_deal_ii_add_test.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/share/deal.II/macros/macro_deal_ii_initialize_cached_variables.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/share/deal.II/macros/macro_deal_ii_invoke_autopilot.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/share/deal.II/macros/macro_deal_ii_pickup_tests.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/share/deal.II/macros/macro_deal_ii_query_git_information.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/home/omarkahol/PDES/scalableConvectionDiffusion/../../.deal2/share/deal.II/macros/macro_deal_ii_setup_target.cmake">
+			<Option virtualFolder="CMake Files\..\..\.deal2\share\deal.II\macros\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
