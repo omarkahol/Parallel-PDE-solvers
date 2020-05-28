@@ -1,6 +1,4 @@
-# Parallel-PDE-solvers
-Solve the following 1D PDE Ut + C*Ux = K*Uxx on a ring (period BC) in parallel using OpenMP and MPI.
+# Parallel PDE solvers
+This folder contains a few examples of C++ codes that solve an advection-diffusion problem in parallel. The domain is either a line(1D), a square (2D) and a cube (3D). The general form of the PD is the following
 
-![alt text](https://github.com/omi14098/Parallel-PDE-solvers/blob/master/1d.png)
-
-Solve the following 2D PDE Ut + C1*Ux + C2*Uy = K*(Uxx + Uyy) on a thorus (periodic BC) in parallel using OpenMP.
+ $ Ut + C*Ux = K*Uxx $
