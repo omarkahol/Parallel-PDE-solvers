@@ -1,8 +1,0 @@
-numPoints,10000
-numProcs,16
-dx,0.00010001
-numTime,1000
-dt,1.0002e-09
-elapsedTime,0.57406
-maxError,0.00063793
-
